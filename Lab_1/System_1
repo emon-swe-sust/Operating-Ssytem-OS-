@@ -1,0 +1,47 @@
+// USE SYNCRONIZATION IN BANK ATM SYSTEM
+
+package solution_1;
+
+public class Solution_1 {
+    
+    public static int  BB = 100000;
+
+    public static void main(String[] args) {
+
+        Credit Thread_1 = new Credit(1000,1);
+        Credit Thread_2 = new Credit(500,2);
+        Credit Thread_3 = new Credit(700,3);
+        Credit Thread_4 = new Credit(300,4);
+        
+        Thread_1.start();
+        Thread_2.start();
+        Thread_3.start();
+        Thread_4.start();
+    }
+}
+
+package solution_1;
+
+public class Credit extends Thread{
+    int balance,Thread_number;
+    public Credit(int balance,int Thread_number){
+        this.balance = balance;
+        this.Thread_number = Thread_number;
+    }
+    
+    @Override
+    public void run(){
+     Method.cash_out(balance,Thread_number);
+    }
+}
+
+
+package solution_1;
+
+public class Method {
+    
+    synchronized public static void cash_out(int balance,int Thread_number){
+        Solution_1.BB -= balance;
+        System.out.println("After cash out of Thread " + Thread_number + " Bank Balance " + Solution_1.BB);
+    }
+}
