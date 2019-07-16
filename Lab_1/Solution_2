@@ -1,0 +1,63 @@
+// IMPLEMENT SYNCRONIZATION USING SYNCHRONIZED METHOD
+
+package solution_2;
+
+public class Solution_2 {
+    public static int BB = 100000;
+
+    public static void main(String[] args) {
+            
+            Credit thread_1 = new Credit(1000);
+            Credit thread_2 = new Credit(500);
+            Credit thread_3 = new Credit(300);
+            Credit thread_4 = new Credit(700);
+            
+            thread_1.setName("1");
+            thread_2.setName("2");
+            thread_3.setName("3");
+            thread_4.setName("4");
+            
+            thread_1.start();  
+            thread_2.start();
+            thread_3.start();
+            thread_4.start();
+    }   
+}
+
+
+package solution_2;
+
+public class Credit extends Thread{
+    public static boolean lock = false;
+    
+    private int balance;
+  
+    public Credit(int balance){
+        this.balance = balance;
+    }
+    
+    @Override
+    public void run(){
+        /*if(lock){
+           while(true){
+               if(!lock){
+                   lock = true;
+                   cash_out(this.balance);
+                   lock = false;
+                   break;
+                }
+            }
+        }*/
+        while(lock){
+            
+        }
+        lock = true;
+        cash_out(this.balance);
+    }
+    
+    public static void cash_out(int balance){
+        Solution_2.BB -= balance;
+        System.out.println("After cash out of Thread " + Thread.currentThread().getName() + " Bank Balance " + Solution_2.BB);
+        lock = false;
+    }   
+}
