@@ -1,0 +1,105 @@
+package bankers;
+import java.util.Scanner;
+
+public class Bankers {
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        
+        int allocation[][],available[],need[][],max[][],ans[];
+        boolean visit[];
+        int row,col,pos;
+        pos = 0;
+        
+        System.out.print("Enter Process Number ");
+        row = in.nextInt();
+        System.out.println("");
+        System.out.print("Enter Resource Number ");
+        col = in.nextInt();
+        
+        allocation = new int[row][col];
+        available = new int[col];
+        ans = new int[row];
+        visit = new boolean[row];
+        max = new int[row][col];
+        need = new int[row][col];
+        
+        for(int i=0;i<row;i++)
+        {
+            visit[i] = false;
+        }
+        
+        System.out.println("");
+        System.out.println("Enter Available Matrix: ");
+        for(int i=0;i<col;i++)
+        {
+            available[i] = in.nextInt();
+        }
+        System.out.println("Enter Allocation Matrix: ");
+        for(int i=0;i<row;i++)
+        {
+            for(int j=0;j<col;j++)
+            {
+                allocation[i][j] = in.nextInt();
+            }
+        }
+        
+        System.out.println("Enter Max Matrix ");
+        for(int i=0;i<row;i++)
+        {
+            for(int j=0;j<col;j++)
+            {
+                max[i][j] = in.nextInt();
+            }
+        }
+         
+        for(int i=0;i<row;i++)
+        {
+            for(int j=0;j<col;j++)
+            {
+                need[i][j] = max[i][j] - allocation[i][j];
+            }
+        }
+        
+        while(true)
+        {
+            boolean brk = false;
+            for(int i=0;i<row;i++)
+            {
+                if(!visit[i])
+                {
+                    boolean ok;
+                    ok = true;
+                    for(int j=0;j<col;j++)
+                    {
+                        if(available[j] < need[i][j])
+                        {
+                            ok = false;
+                        }
+                    }
+                    if(ok)
+                    {
+                        brk = true;
+                        visit[i] = true;
+                        ans[pos] = i;
+                        pos++;
+                        for(int j=0;j<col;j++)
+                        {
+                            available[j] = available[j] + allocation[i][j];
+                        }
+                    }
+                }
+            }
+            if(!brk)
+                break;
+        }
+        
+        System.out.print("The Serial is ");
+        for(int i=0;i<pos;i++)
+        {
+            System.out.print(ans[i] + " ");
+        }
+        
+    }
+    
+}
